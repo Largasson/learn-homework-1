@@ -13,37 +13,30 @@
 
 """
 
-
 def discounted(price, discount, max_discount=20):
     try:
         price = float(price)
         discount = float(discount)
         max_discount = int(max_discount)
-    except ValueError:
-        print('Передан некорректрный тип данных')
-    try:
         price = abs(price)
         discount = abs(discount)
         max_discount = abs(max_discount)
-    except TypeError:
-        print('Переданные данные не поддерживаются функцией abs()')
-    try:
         if max_discount >= 100:
-            raise ValueError('Слишком большая максимальная скидка')
-        if discount >= max_discount:
-            return price
-        else:
-            return price - (price * discount / 100)
+            raise ValueError
     except ValueError:
-        print('Передан некорректрный тип данных')
+        return f'Переданные данные некорректны'
     except TypeError:
-        print('Переданные данные не поддерживаются')
+        return f'Переданные данные некорректны'
+    if discount >= max_discount:
+        return price
+    else:
+        return price - (price * discount / 100)
 
 
 if __name__ == "__main__":
     print(discounted(100, 2))
     print(discounted(100, "3"))
     print(discounted("100", "4.5"))
-    print(discounted("five", 5) if discounted("five", 5) else 'Были переданы некорректыне данные, функция ничего не посчитала')
-    print(discounted("сто", "десять")  if discounted("сто", "десять") else 'Были переданы некорректыне данные, функция ничего не посчитала')
+    print(discounted("five", 5))
+    print(discounted("сто", "десять"))
     print(discounted(100.0, 5, "10"))
