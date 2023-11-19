@@ -29,7 +29,7 @@ def main():
             return f"Возраст детского сада"
         elif 7 < age <= 18:
             return f"Школьный возраст"
-        elif 19 < age <= 24:
+        elif 19 <= age <= 24:
             return f"Возраст ВУЗа"
         else:
             return f"Возраст для трудовой деятельности"
