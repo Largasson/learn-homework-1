@@ -20,16 +20,15 @@ questions_and_answers = {"Как дела?": "Хорошо!", "Что делае
                          "Много работаешь?": "Хорошо, когда есть работа",
                          "Чатом GTP пользуешься?": "Так я ж и есть чат!"}
 
-answer_var = ('Не то ты спаршиваешь, давай другой вопрос..', 'Ну и зачем тебе этого.. ладно, справшивай.',
-              '......... Спроси что-нибудь еще.')
+answer_var = ('Не то ты спаршиваешь, давай другой вопрос..', 'Ну и зачем тебе этого.. ладно, справшивай',
+              '......... Спроси что-нибудь еще')
 
 
 def ask_user(answers_dict, wrong_answer):
     print('Ну давай, спрашивай...')
     question = input()
     while question not in answers_dict:
-        print(choice(wrong_answer))
-        question = input()
+        question = input(f'{choice(wrong_answer)} : ')
     print(answers_dict[question])
 
 
