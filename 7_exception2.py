@@ -23,10 +23,8 @@ def discounted(price, discount, max_discount=20):
         max_discount = abs(max_discount)
         if max_discount >= 100:
             raise ValueError('Max discount out of range')
-    except ValueError as err:
-        return f'The transmitted data is incorrect: ValueError - {err}'
-    except TypeError as err:
-        return f'The transmitted data is incorrect: TypeError - {err}'
+    except (ValueError, TypeError) as err:
+        return f'The transmitted data is incorrect: {type(err).__name__} - {err}'
     if discount >= max_discount:
         return price
     else:
