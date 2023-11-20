@@ -9,7 +9,7 @@
 * В функции-обработчике команды из update.message.text получите
   название планеты (подсказка: используйте .split())
 * При помощи условного оператора if и ephem.constellation научите
-  бота отвечать, в каком созвездии сегодня находится планета.
+  бота отвечать, в каком созвездии сегодня находится планета .
 
 """
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
