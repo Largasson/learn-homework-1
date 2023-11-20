@@ -22,11 +22,11 @@ def discounted(price, discount, max_discount=20):
         discount = abs(discount)
         max_discount = abs(max_discount)
         if max_discount >= 100:
-            raise ValueError
-    except ValueError:
-        return f'Переданные данные некорректны'
-    except TypeError:
-        return f'Переданные данные некорректны'
+            raise ValueError('Max discount out of range')
+    except ValueError as err:
+        return f'The transmitted data is incorrect: ValueError - {err}'
+    except TypeError as err:
+        return f'The transmitted data is incorrect: TypeError - {err}'
     if discount >= max_discount:
         return price
     else:
@@ -34,9 +34,9 @@ def discounted(price, discount, max_discount=20):
 
 
 if __name__ == "__main__":
-    print(discounted(100, 2))
+    print(discounted([], {}))
     print(discounted(100, "3"))
     print(discounted("100", "4.5"))
     print(discounted("five", 5))
     print(discounted("сто", "десять"))
-    print(discounted(100.0, 5, "10"))
+    print(discounted(100.0, 5, "102"))
