@@ -17,7 +17,7 @@ import logging
 import ephem
 from datetime import date
 import settings
-from string import ascii_letters
+from bot_validate_planet import valid_planet_name, PlanetNameError
 
 logging.basicConfig(filename='bot.log', level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")  # конфигурация логирования, настройка указания времени
@@ -43,33 +43,22 @@ def talk_to_me(update, context):
     update.message.reply_text(text)
 
 
-def valid_planet_name(input_planet):
-    '''
-     проверка на корректность планеты, перевод с русского на английский
-    '''
-    planets = {'Марс': 'Mars', 'Меркурий': 'Mercury', 'Венера': 'Venus',
-               'Юпитер': 'Jupiter', 'Сатурн': 'Saturn',
-               'Уран': 'Uranus', 'Нептун': 'Neptune'}
-
-    if all(map(lambda c: c in ascii_letters, input_planet)):
-        return input_planet
-    else:
-        return planets.get(input_planet)
-
-
 def planet_func(update, context):
     text = update.message.text
-    input_planet = text.split()[1].capitalize()
     try:
-        planet = valid_planet_name(input_planet)
-        pre_answer = getattr(ephem, planet)(date.today())
-        answer = ephem.constellation(pre_answer)
-        logging.info(answer)
-        txt_ans = f"На данный момент {planet.capitalize()} в констеляции: {', '.join(answer)}"
-        update.message.reply_text(txt_ans)
-    except (AttributeError, TypeError):
-        logging.info('Такой планеты нет в солнечной системе')
-        update.message.reply_text('Такой планеты нет в солнечной системе')
+        planet = valid_planet_name(text)
+    except PlanetNameError as err:
+        logging.info(err)
+        update.message.reply_text(err)
+
+    pre_answer = getattr(ephem, planet)(date.today())
+    answer = ephem.constellation(pre_answer)
+    logging.info(answer)
+    txt_ans = f"На данный момент {planet.capitalize()} в констеляции: {', '.join(answer)}"
+    update.message.reply_text(txt_ans)
+
+        # logging.info('Такой планеты нет в солнечной системе')
+        # update.message.reply_text('Такой планеты нет в солнечной системе')
 
 
 def main():
